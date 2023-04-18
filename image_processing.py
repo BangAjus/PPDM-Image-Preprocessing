@@ -69,6 +69,12 @@ def image_hist(picture_dir):
     plt.hist(pic.flatten(), bins=256)
 
 
+def glcm_for_image(photo, angle):
+    photo = io.imread(photo, pilmode='L')
+    return feature.graycomatrix(photo, distances=[2], angles=angle,
+                                levels=256, symmetric=True, normed=True).flatten().reshape(256, 256)
+    
+
 def calc_glcm_for_each_photo(photo, emotion):
     
     features = ['dissimilarity', 'correlation', 'homogeneity', 'contrast', 'ASM', 'energy']
@@ -119,7 +125,7 @@ def concat_calculation(photos, emotions):
         empty = pd.concat([empty, data], ignore_index=True)
         
     a = 1
-    j = 401
+    j = 391
     for i in empty.index:
         empty.loc[i, 'Picture'] = emotions[0] + '-' + str(j)
         a += 1
@@ -131,7 +137,7 @@ def concat_calculation(photos, emotions):
 
 def first_order_stat(photos, emotion):
 
-    empty = {'Picture':[emotion[0]  + '-' + str(i+401) for i in range(len(photos))],
+    empty = {'Picture':[emotion[0]  + '-' + str(i+391) for i in range(len(photos))],
              'Emotion':[i for i in emotion]}
 
     empty['Mean'] = [np.mean(photos[i].flatten()) for i in range(len(photos))]
