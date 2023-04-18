@@ -5,9 +5,9 @@ st.title("Image Processing dengan Python")
 
 
 img_number = st.number_input('Cari angka dari file gambar: ',
-                             min_value=401,
-                             max_value=410,
-                             value=401,
+                             min_value=391,
+                             max_value=400,
+                             value=391,
                              step=1,)
 
 img_emotion = st.radio("Pilih emosi yang akan digunakan untuk menampilkan matriks",
@@ -35,9 +35,9 @@ if img_emotion == 'Sedih':
 
 # histogram untuk seluruh foto
 hist_number = st.number_input('Cari angka untuk histogram gambar: ',
-                             min_value=401,
-                             max_value=410,
-                             value=401,
+                             min_value=391,
+                             max_value=400,
+                             value=391,
                              step=1,)
 
 hist_emotion = st.radio("Pilih emosi yang akan digunakan untuk menampilkan histogram",
@@ -95,6 +95,41 @@ if first_order_emotion == 'Sedih':
     datas = data_for_stats('Sad')
     df = first_order_stat(datas, ['Sad']*len(datas))
     st.table(df)
+
+
+# segmen matriks GLCM
+glcm_number = st.number_input('Cari angka dari file gambar untuk GLCM: ',
+                             min_value=391,
+                             max_value=400,
+                             value=391,
+                             step=1,)
+
+glcm_angle = st.number_input('Cari sudut dari file gambar untuk GLCM: ',
+                             min_value=0,
+                             max_value=135,
+                             value=0,
+                             step=45,)
+
+glcm_emotion = st.radio("Pilih emosi yang akan digunakan untuk menampilkan matriks GLCM",
+                       ('Senang', 'Netral', 'Sedih'))
+
+if glcm_emotion == 'Senang':
+
+    happy = "C:/Tugas/PPDM/Tugas 2/Pictures/Happy"
+    img_dir = happy + '/' + f'happy-0{str(glcm_number)}.jpg'
+    st.table(pd.DataFrame(glcm_for_image(img_dir, [glcm_angle])))
+
+if glcm_emotion == 'Netral':
+
+    neutral = "C:/Tugas/PPDM/Tugas 2/Pictures/Neutral"
+    img_dir = neutral + '/' + f'neutral-0{str(glcm_number)}.jpg'
+    st.table(pd.DataFrame(glcm_for_image(img_dir, [glcm_angle])))
+
+if glcm_emotion == 'Sedih':
+
+    sad = "C:/Tugas/PPDM/Tugas 2/Pictures/Sad"
+    img_dir = sad + '/' + f'sad-0{str(glcm_number)}.jpg'
+    st.table(pd.DataFrame(glcm_for_image(img_dir, [glcm_angle])))
 
 
 # segmen orde kedua
